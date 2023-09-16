@@ -17,8 +17,12 @@ foregroundColor equ $81
     org $f000
 
 Start
-	CLEAN_START	; Macro to initialize several flags and registers, safely clears memory and TIA
+    CLEAN_START	; Macro to initialize several flags and registers, safely clears memory and TIA
 
+;Set the playfield mode to either normal (0) or mirrored (1)
+    lda #1 ;comment/uncomment to change to normal/mirrored
+    sta CTRLPF
+    
 NextFrame
 
     lda #2		; same as binary #%00000010
@@ -46,9 +50,7 @@ LVBlank
     sta COLUBK ;reset the background color to black to start our new frame
     sta COLUPF ;reset teh foreground color to black to start the new frame
         
-;Set the playfield mode to either normal (0) or mirrored (1)
-    lda #1 ;comment/uncomment to change to normal/mirrored
-    sta CTRLPF
+
 
 ;Draw the 192 scanlines
     ldx #192 ;count 192 lines
